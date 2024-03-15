@@ -1,6 +1,6 @@
 {
     "name": "@diia-inhouse/eslint-config",
-    "version": "3.5.0",
+    "version": "3.5.1",
     "description": "common eslint config",
     "author": "Diia",
     "main": "index.js",

@@ -26,7 +26,7 @@ This repository contains the package with eslint config.
 Example:
 
 ```
-git clone https://github.com/diia-open-source/eslint-config.git
+git clone https://github.com/diia-open-source/be-eslint-config.git eslint-config
 ```
 
 ---
