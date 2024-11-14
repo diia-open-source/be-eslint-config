@@ -163,7 +163,7 @@ module.exports = {
         ],
         'object-curly-newline': ['off'],
         'no-underscore-dangle': ['error', { allow: ['_id'] }],
-        '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'angle-bracket' }],
+        '@typescript-eslint/consistent-type-assertions': ['error', { assertionStyle: 'as' }],
         '@typescript-eslint/typedef': 'off',
         '@typescript-eslint/explicit-function-return-type': ['error'],
         'no-return-await': 'off',
@@ -200,5 +200,7 @@ module.exports = {
         'unicorn/numeric-separators-style': ['error', { number: { onlyIfContainsSeparator: true } }],
         'unicorn/catch-error-name': ['error', { name: 'err' }],
         '@typescript-eslint/member-ordering': 'error',
+        '@typescript-eslint/no-floating-promises': 'error',
+        'import/no-extraneous-dependencies': ['error', { devDependencies: ['**/tests/**', '**/vitest.*.{js,cjs,mjs,ts,cts,mts}'] }],
     },
 }
