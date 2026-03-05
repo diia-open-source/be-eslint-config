@@ -88,6 +88,18 @@ const serviceBoundariesParams = {
                 pattern: 'src/locales/**',
             },
             {
+                type: 'eventListenersTypes',
+                pattern: 'src/eventListeners/*.types.ts',
+                mode: 'file',
+                capture: ['eventName'],
+            },
+            {
+                type: 'eventListeners',
+                pattern: 'src/eventListeners/*.ts',
+                mode: 'file',
+                capture: ['eventName'],
+            },
+            {
                 type: 'externalEventListenersTypes',
                 pattern: 'src/externalEventListeners/*.types.ts',
                 mode: 'file',
@@ -185,6 +197,11 @@ const serviceBoundariesParams = {
                 { from: ['depsTypes'], allow: ['configsTypes', 'viewsTypes', 'providers'] },
                 { from: ['configs'], allow: ['configsTypes'] },
                 { from: ['configsTypes'], allow: ['configs'] },
+                { from: ['eventListenersTypes'], allow: [] },
+                {
+                    from: ['eventListeners'],
+                    allow: ['services', 'servicesTypes', 'configsTypes', ['eventListenersTypes', { eventName: '${from.eventName}' }]],
+                },
                 { from: ['externalEventListenersTypes'], allow: [] },
                 {
                     from: ['externalEventListeners'],
