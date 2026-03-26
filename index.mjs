@@ -133,6 +133,10 @@ const serviceBoundariesParams = {
                 pattern: 'src/worker/**',
             },
             {
+                type: 'validation',
+                pattern: 'src/validation/**',
+            },
+            {
                 type: 'depsTypes',
                 pattern: 'src/deps/*types.ts',
                 mode: 'file',
@@ -185,7 +189,10 @@ const serviceBoundariesParams = {
                         'workerWorkflowsTypes',
                     ],
                 },
-                { from: ['providers'], allow: ['configsTypes', ['providersTypes', { providerName: '${from.providerName}' }]] },
+                {
+                    from: ['providers'],
+                    allow: ['configsTypes', 'validation', ['providersTypes', { providerName: '${from.providerName}' }]],
+                },
                 { from: ['views'], allow: ['viewsTypes', 'servicesTypes', 'modelsTypes', 'generated'] },
                 { from: ['viewsTypes'], allow: ['locales'] },
                 { from: ['repositories'], allow: ['models', 'configsTypes', 'modelsTypes'] },
@@ -197,7 +204,7 @@ const serviceBoundariesParams = {
                 { from: ['depsTypes'], allow: ['configsTypes', 'viewsTypes', 'providers'] },
                 { from: ['configs'], allow: ['configsTypes'] },
                 { from: ['configsTypes'], allow: ['configs'] },
-                { from: ['eventListenersTypes'], allow: [] },
+                { from: ['eventListenersTypes'], allow: ['modelsTypes'] },
                 {
                     from: ['eventListeners'],
                     allow: ['services', 'servicesTypes', 'configsTypes', ['eventListenersTypes', { eventName: '${from.eventName}' }]],
