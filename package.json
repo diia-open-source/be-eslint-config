@@ -1,6 +1,6 @@
 {
     "name": "@diia-inhouse/eslint-config",
-    "version": "8.5.0",
+    "version": "8.6.0",
     "description": "common eslint config",
     "author": "Diia",
     "main": "index.mjs",

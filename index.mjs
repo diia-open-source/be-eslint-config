@@ -39,6 +39,11 @@ const serviceBoundariesParams = {
                 pattern: 'src/views/**',
             },
             {
+                type: 'schemas',
+                pattern: 'src/**/*.schema.ts',
+                mode: 'file',
+            },
+            {
                 type: 'providersTypes',
                 pattern: 'src/providers/**/*types.ts',
                 mode: 'file',
@@ -133,10 +138,6 @@ const serviceBoundariesParams = {
                 pattern: 'src/worker/**',
             },
             {
-                type: 'validation',
-                pattern: 'src/validation/**',
-            },
-            {
                 type: 'depsTypes',
                 pattern: 'src/deps/*types.ts',
                 mode: 'file',
@@ -172,7 +173,14 @@ const serviceBoundariesParams = {
             rules: [
                 {
                     from: ['actions'],
-                    allow: ['services', 'servicesTypes', 'views', 'generated', ['actionsTypes', { actionName: '${from.actionName}' }]],
+                    allow: [
+                        'services',
+                        'servicesTypes',
+                        'views',
+                        'generated',
+                        'schemas',
+                        ['actionsTypes', { actionName: '${from.actionName}' }],
+                    ],
                 },
                 { from: ['actionsTypes'], allow: ['generated'] },
                 {
@@ -191,8 +199,9 @@ const serviceBoundariesParams = {
                 },
                 {
                     from: ['providers'],
-                    allow: ['configsTypes', 'validation', ['providersTypes', { providerName: '${from.providerName}' }]],
+                    allow: ['configsTypes', 'schemas', ['providersTypes', { providerName: '${from.providerName}' }]],
                 },
+                { from: ['schemas'], allow: [] },
                 { from: ['views'], allow: ['viewsTypes', 'servicesTypes', 'modelsTypes', 'generated'] },
                 { from: ['viewsTypes'], allow: ['locales'] },
                 { from: ['repositories'], allow: ['models', 'configsTypes', 'modelsTypes'] },
@@ -207,12 +216,18 @@ const serviceBoundariesParams = {
                 { from: ['eventListenersTypes'], allow: ['modelsTypes'] },
                 {
                     from: ['eventListeners'],
-                    allow: ['services', 'servicesTypes', 'configsTypes', ['eventListenersTypes', { eventName: '${from.eventName}' }]],
+                    allow: [
+                        'services',
+                        'servicesTypes',
+                        'configsTypes',
+                        'schemas',
+                        ['eventListenersTypes', { eventName: '${from.eventName}' }],
+                    ],
                 },
                 { from: ['externalEventListenersTypes'], allow: [] },
                 {
                     from: ['externalEventListeners'],
-                    allow: ['services', 'configsTypes', ['externalEventListenersTypes', { eventName: '${from.eventName}' }]],
+                    allow: ['services', 'configsTypes', 'schemas', ['externalEventListenersTypes', { eventName: '${from.eventName}' }]],
                 },
                 { from: ['worker'], allow: ['configsTypes', 'depsTypes', 'workerActivities'] },
                 { from: ['workerActivities'], allow: ['services', 'servicesTypes', 'repositories', 'modelsTypes', 'configsTypes'] },
