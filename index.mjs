@@ -168,72 +168,148 @@ const serviceBoundariesParams = {
         ],
     },
     rules: {
-        elementTypes: {
+        dependencies: {
             default: 'disallow',
             rules: [
                 {
-                    from: ['actions'],
-                    allow: [
-                        'services',
-                        'servicesTypes',
-                        'views',
-                        'generated',
-                        'schemas',
-                        ['actionsTypes', { actionName: '${from.actionName}' }],
-                    ],
+                    from: { type: 'actions' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'servicesTypes' },
+                            { type: 'views' },
+                            { type: 'generated' },
+                            { type: 'schemas' },
+                            { type: 'actionsTypes', captured: { actionName: '{{ from.captured.actionName }}' } },
+                        ],
+                    },
                 },
-                { from: ['actionsTypes'], allow: ['generated'] },
+                { from: { type: 'actionsTypes' }, allow: { to: [{ type: 'generated' }] } },
                 {
-                    from: ['services'],
-                    allow: [
-                        'services',
-                        'servicesTypes',
-                        'providers',
-                        'providersTypes',
-                        'repositories',
-                        'modelsTypes',
-                        'configsTypes',
-                        'workerWorkflows',
-                        'workerWorkflowsTypes',
-                    ],
+                    from: { type: 'services' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'servicesTypes' },
+                            { type: 'providers' },
+                            { type: 'providersTypes' },
+                            { type: 'repositories' },
+                            { type: 'modelsTypes' },
+                            { type: 'configsTypes' },
+                            { type: 'workerWorkflows' },
+                            { type: 'workerWorkflowsTypes' },
+                        ],
+                    },
                 },
                 {
-                    from: ['providers'],
-                    allow: ['configsTypes', 'schemas', ['providersTypes', { providerName: '${from.providerName}' }]],
+                    from: { type: 'providers' },
+                    allow: {
+                        to: [
+                            { type: 'configsTypes' },
+                            { type: 'schemas' },
+                            { type: 'providersTypes', captured: { providerName: '{{ from.captured.providerName }}' } },
+                        ],
+                    },
                 },
-                { from: ['schemas'], allow: [] },
-                { from: ['views'], allow: ['viewsTypes', 'servicesTypes', 'modelsTypes', 'generated'] },
-                { from: ['viewsTypes'], allow: ['locales'] },
-                { from: ['repositories'], allow: ['models', 'configsTypes', 'modelsTypes'] },
-                { from: ['models'], allow: [['modelsTypes', { modelName: '${from.modelName}' }]] },
-                { from: ['tests'], allow: ['*'] },
-                { from: ['servicesTypes'], allow: ['servicesTypes', 'modelsTypes'] },
-                { from: ['srcRoot'], allow: ['srcRoot', 'depsTypes', 'configsTypes', 'deps', 'configs', 'worker'] },
-                { from: ['deps'], allow: ['depsTypes', 'configsTypes', 'models', 'viewsTypes', 'providers', 'services'] },
-                { from: ['depsTypes'], allow: ['configsTypes', 'viewsTypes', 'providers'] },
-                { from: ['configs'], allow: ['configsTypes'] },
-                { from: ['configsTypes'], allow: ['configs'] },
-                { from: ['eventListenersTypes'], allow: ['modelsTypes'] },
+                { from: { type: 'schemas' }, allow: [] },
                 {
-                    from: ['eventListeners'],
-                    allow: [
-                        'services',
-                        'servicesTypes',
-                        'configsTypes',
-                        'schemas',
-                        ['eventListenersTypes', { eventName: '${from.eventName}' }],
-                    ],
+                    from: { type: 'views' },
+                    allow: { to: [{ type: 'viewsTypes' }, { type: 'servicesTypes' }, { type: 'modelsTypes' }, { type: 'generated' }] },
                 },
-                { from: ['externalEventListenersTypes'], allow: [] },
+                { from: { type: 'viewsTypes' }, allow: { to: [{ type: 'locales' }] } },
                 {
-                    from: ['externalEventListeners'],
-                    allow: ['services', 'configsTypes', 'schemas', ['externalEventListenersTypes', { eventName: '${from.eventName}' }]],
+                    from: { type: 'repositories' },
+                    allow: { to: [{ type: 'models' }, { type: 'configsTypes' }, { type: 'modelsTypes' }] },
                 },
-                { from: ['worker'], allow: ['configsTypes', 'depsTypes', 'workerActivities'] },
-                { from: ['workerActivities'], allow: ['services', 'servicesTypes', 'repositories', 'modelsTypes', 'configsTypes'] },
-                { from: ['workerWorkflowsTypes'], allow: [] },
-                { from: ['workerWorkflows'], allow: ['services', 'configsTypes', 'workerActivities', 'workerWorkflowsTypes'] },
-                { from: ['workerSchedules'], allow: ['configsTypes', 'workerWorkflows'] },
+                {
+                    from: { type: 'models' },
+                    allow: { to: [{ type: 'modelsTypes', captured: { modelName: '{{ from.captured.modelName }}' } }] },
+                },
+                { from: { type: 'tests' }, allow: { to: [{ type: '*' }] } },
+                { from: { type: 'servicesTypes' }, allow: { to: [{ type: 'servicesTypes' }, { type: 'modelsTypes' }] } },
+                {
+                    from: { type: 'srcRoot' },
+                    allow: {
+                        to: [
+                            { type: 'srcRoot' },
+                            { type: 'depsTypes' },
+                            { type: 'configsTypes' },
+                            { type: 'deps' },
+                            { type: 'configs' },
+                            { type: 'worker' },
+                        ],
+                    },
+                },
+                {
+                    from: { type: 'deps' },
+                    allow: {
+                        to: [
+                            { type: 'depsTypes' },
+                            { type: 'configsTypes' },
+                            { type: 'models' },
+                            { type: 'viewsTypes' },
+                            { type: 'providers' },
+                            { type: 'services' },
+                        ],
+                    },
+                },
+                { from: { type: 'depsTypes' }, allow: { to: [{ type: 'configsTypes' }, { type: 'viewsTypes' }, { type: 'providers' }] } },
+                { from: { type: 'configs' }, allow: { to: [{ type: 'configsTypes' }] } },
+                { from: { type: 'configsTypes' }, allow: { to: [{ type: 'configs' }] } },
+                { from: { type: 'eventListenersTypes' }, allow: { to: [{ type: 'modelsTypes' }] } },
+                {
+                    from: { type: 'eventListeners' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'servicesTypes' },
+                            { type: 'configsTypes' },
+                            { type: 'schemas' },
+                            { type: 'eventListenersTypes', captured: { eventName: '{{ from.captured.eventName }}' } },
+                        ],
+                    },
+                },
+                { from: { type: 'externalEventListenersTypes' }, allow: [] },
+                {
+                    from: { type: 'externalEventListeners' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'configsTypes' },
+                            { type: 'schemas' },
+                            { type: 'externalEventListenersTypes', captured: { eventName: '{{ from.captured.eventName }}' } },
+                        ],
+                    },
+                },
+                {
+                    from: { type: 'worker' },
+                    allow: { to: [{ type: 'configsTypes' }, { type: 'depsTypes' }, { type: 'workerActivities' }] },
+                },
+                {
+                    from: { type: 'workerActivities' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'servicesTypes' },
+                            { type: 'repositories' },
+                            { type: 'modelsTypes' },
+                            { type: 'configsTypes' },
+                        ],
+                    },
+                },
+                { from: { type: 'workerWorkflowsTypes' }, allow: [] },
+                {
+                    from: { type: 'workerWorkflows' },
+                    allow: {
+                        to: [
+                            { type: 'services' },
+                            { type: 'configsTypes' },
+                            { type: 'workerActivities' },
+                            { type: 'workerWorkflowsTypes' },
+                        ],
+                    },
+                },
+                { from: { type: 'workerSchedules' }, allow: { to: [{ type: 'configsTypes' }, { type: 'workerWorkflows' }] } },
             ],
         },
     },
@@ -252,7 +328,7 @@ export const serviceBoundariesConfig = [
     {
         rules: {
             ...boundaries.configs.strict.rules,
-            'boundaries/element-types': ['error', serviceBoundariesParams.rules.elementTypes],
+            'boundaries/dependencies': ['error', serviceBoundariesParams.rules.dependencies],
         },
     },
 ]
