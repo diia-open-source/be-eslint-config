@@ -211,6 +211,7 @@ const serviceBoundariesParams = {
                         ],
                     },
                 },
+                { from: { type: 'providersTypes' }, allow: { to: [{ type: 'modelsTypes' }] } },
                 { from: { type: 'schemas' }, allow: [] },
                 {
                     from: { type: 'views' },
