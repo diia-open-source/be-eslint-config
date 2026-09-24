@@ -1,6 +1,6 @@
 {
     "name": "@diia-inhouse/eslint-config",
-    "version": "8.8.8",
+    "version": "8.8.9",
     "description": "common eslint config",
     "author": "Diia",
     "main": "index.mjs",
@@ -18,7 +18,7 @@
         "extends": "@diia-inhouse/configs/dist/semantic-release/package"
     },
     "dependencies": {
-        "@diia-inhouse/eslint-plugin": "1.9.11",
+        "@diia-inhouse/eslint-plugin": "1.9.12",
         "@ianvs/prettier-plugin-sort-imports": "4.7.0",
         "@stylistic/eslint-plugin": "5.7.0",
         "@typescript-eslint/eslint-plugin": "8.53.1",
